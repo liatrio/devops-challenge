@@ -58,6 +58,7 @@ class Register extends Component {
   render() {
     return (
       <div className="column column-20">
+        <h4>Track your Progress</h4>
         <form onSubmit={this.handleSubmit}>
           <fieldset>
             <label>
