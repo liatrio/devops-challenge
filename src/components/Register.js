@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
 class Register extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = { user: '', invalid: true, notUser: false }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);

@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Step } from 'semantic-ui-react';
 
 class Scoreboard extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
   }
 
   render() {

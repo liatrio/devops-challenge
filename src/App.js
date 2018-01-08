@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
+import 'semantic-ui-css/semantic.min.css';
+import 'milligram';
 import logo from './logo.png';
 import Register from './components/Register'
 import Instructions from './components/Instructions'
 import Scoreboard from './components/Scoreboard'
 import Info from './components/Info'
 import './App.css';
-import 'semantic-ui-css/semantic.min.css';
-import 'milligram';
 
 class App extends Component {
   constructor() {
