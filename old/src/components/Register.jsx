@@ -57,7 +57,7 @@ class Register extends Component {
 
   render() {
     return (
-      <div className="column column-20">
+      <div>
         <h4>Track your Progress</h4>
         <form onSubmit={this.handleSubmit}>
           <fieldset>
@@ -65,7 +65,7 @@ class Register extends Component {
               <input type="text" name="user" value={this.state.user}
                onChange={this.handleChange}/>
             </label>
-            <input className="button-outline" disabled={this.state.invalid} type="submit"
+            <input className="button-outline full-width" disabled={this.state.invalid} type="submit"
              value="Set GitHub Username"/>
             <button className="button-outline button-small full-width" onClick={this.clearUser}>Reset</button>
             { this.state.notUser === true ?

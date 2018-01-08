@@ -8,7 +8,7 @@ class Instructions extends Component {
 
   render() {
     return (
-      <div className="column column-80">
+      <div>
         <h4>Instructions</h4>
         <ol>
           <li>Create a <a target="_blank" rel="noopener noreferrer" href="https://github.com/join">GitHub</a> account if you don't already have one. Enter your GitHub username in the field to the right.</li>
