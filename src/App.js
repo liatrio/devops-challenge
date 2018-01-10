@@ -21,6 +21,7 @@ class App extends Component {
     };
     this.updateProgress = this.updateProgress.bind(this);
     this.updateCompletion = this.updateCompletion.bind(this);
+    this.updateActive = this.updateActive.bind(this);
     this.hasForked = this.hasForked.bind(this);
     setInterval(this.updateProgress, 5000);
   }
@@ -51,6 +52,12 @@ class App extends Component {
     this.setState({ completed: newCompleted });
   }
 
+  updateActive(index) {
+    let newActive = [ false, false, false, false, false, false ];
+    newActive[index] = true;
+    this.setState({ active: newActive });
+  }
+
   updateProgress() {
     if (this.state.user !== '') {
       this.updateCompletion(0, true);
@@ -69,8 +76,7 @@ class App extends Component {
           }
         })
         .then(function() {
-          let active = that.state.completed.indexOf(false);
-          console.log('active('+active+')');
+          that.updateActive(that.state.completed.indexOf(false));
         });
     } else {
       this.updateCompletion(0, false);
@@ -79,8 +85,7 @@ class App extends Component {
       this.updateCompletion(3, false);
       this.updateCompletion(4, false);
       this.updateCompletion(5, false);
-      let active = this.state.completed.indexOf(false);
-      console.log('active('+active+')');
+      this.updateActive(this.state.completed.indexOf(false));
     }
   }
 
