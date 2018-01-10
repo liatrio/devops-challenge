@@ -56,7 +56,7 @@ class App extends Component {
       this.updateCompletion(0, true);
       //this.hasForked(this.state.user);
       var that = this;
-      this.hasForked('HunterMayers')
+      this.hasForked(this.state.user)
         .then(function(forked) {
           if (forked === true) {
             that.updateCompletion(1, true);
@@ -67,6 +67,10 @@ class App extends Component {
             that.updateCompletion(4, false);
             that.updateCompletion(5, false);
           }
+        })
+        .then(function() {
+          let active = that.state.completed.indexOf(false);
+          console.log('active('+active+')');
         });
     } else {
       this.updateCompletion(0, false);
@@ -75,6 +79,8 @@ class App extends Component {
       this.updateCompletion(3, false);
       this.updateCompletion(4, false);
       this.updateCompletion(5, false);
+      let active = this.state.completed.indexOf(false);
+      console.log('active('+active+')');
     }
   }
 
