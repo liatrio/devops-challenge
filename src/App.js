@@ -19,12 +19,30 @@ class App extends Component {
       active: [ true, false, false, false, false, false ],
       completed: [ false, false, false, false, false, false ]
     };
+    this.updateProgress = this.updateProgress.bind(this);
+    this.updateCompletion = this.updateCompletion.bind(this);
+    setInterval(this.updateProgress, 5000);
+  }
+
+  updateCompletion(index, value) {
+    let newCompleted = this.state.completed;
+    newCompleted[index] = value;
+    this.setState({ completed: newCompleted });
+  }
+
+  updateProgress() {
+    console.log("Hello world");
+    if (this.state.user !== '') {
+      this.updateCompletion(0, true);
+    } else {
+      this.updateCompletion(0, false);
+    }
   }
 
   render() {
     return (
       <div>
-        <MainMenu/>
+        <MainMenu />
         <Container style={{ marginTop: '7em' }}>
           <Grid>
             <Grid.Row>
@@ -39,7 +57,7 @@ class App extends Component {
               </Grid.Column>
             </Grid.Row> 
             <Grid.Row centered>
-              <Footer/>
+              <Footer />
             </Grid.Row>
           </Grid>
         </Container>
