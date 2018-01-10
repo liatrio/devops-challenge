@@ -3,6 +3,7 @@ import 'semantic-ui-css/semantic.min.css';
 import { Container, Grid } from 'semantic-ui-react';
 import MainMenu from './components/MainMenu';
 import Progress from './components/Progress';
+import Instructions from './components/Instructions';
 import Footer from './components/Footer';
 import './App.css';
 
@@ -15,8 +16,8 @@ class App extends Component {
     }
     this.state = {
       user: localUser || '',
-      gitHubActive: true,
-      gitHubCompleted: false
+      active: [ true, false, false, false, false, false ],
+      completed: [ false, false, false, false, false, false ]
     };
   }
 
@@ -27,12 +28,17 @@ class App extends Component {
         <Container style={{ marginTop: '7em' }}>
           <Grid>
             <Grid.Row>
-              <Progress
-                gitHubActive={this.state.gitHubActive}
-                gitHubCompleted={this.state.gitHubCompleted}
-              />
+              <Grid.Column width={5}>
+                <Progress
+                  activeStep={ this.state.active }
+                  completedStep={ this.state.completed }
+                />
+              </Grid.Column>
+              <Grid.Column width={11}>
+                <Instructions activeStep={ this.state.active } />
+              </Grid.Column>
             </Grid.Row> 
-            <Grid.Row>
+            <Grid.Row centered>
               <Footer/>
             </Grid.Row>
           </Grid>
