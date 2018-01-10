@@ -15,13 +15,34 @@ class App extends Component {
       localUser = JSON.parse(localStorage.getItem('USER'));
     }
     this.state = {
-      user: localUser || '',
+      user: localUser || 'shanemacbride',
       active: [ true, false, false, false, false, false ],
       completed: [ false, false, false, false, false, false ]
     };
     this.updateProgress = this.updateProgress.bind(this);
     this.updateCompletion = this.updateCompletion.bind(this);
+    this.hasForked = this.hasForked.bind(this);
     setInterval(this.updateProgress, 5000);
+  }
+
+  hasForked(u) {
+    const url =
+      'https://api.github.com/repos/liatrio/microservices-demo/forks';
+    return fetch(url)
+      .then(function(a) {
+        return a.json();
+      })
+      .then(function(b) {
+        for (var key in b) {
+          console.log(b[key].owner.login);
+          if (b[key].owner.login === u) {
+            console.log('returning true');
+            return true;
+          }
+        }
+        console.log('returning false');
+        return false;
+      });
   }
 
   updateCompletion(index, value) {
@@ -31,11 +52,29 @@ class App extends Component {
   }
 
   updateProgress() {
-    console.log("Hello world");
     if (this.state.user !== '') {
       this.updateCompletion(0, true);
+      //this.hasForked(this.state.user);
+      var that = this;
+      this.hasForked('HunterMayers')
+        .then(function(forked) {
+          if (forked === true) {
+            that.updateCompletion(1, true);
+          } else {
+            that.updateCompletion(1, false);
+            that.updateCompletion(2, false);
+            that.updateCompletion(3, false);
+            that.updateCompletion(4, false);
+            that.updateCompletion(5, false);
+          }
+        });
     } else {
       this.updateCompletion(0, false);
+      this.updateCompletion(1, false);
+      this.updateCompletion(2, false);
+      this.updateCompletion(3, false);
+      this.updateCompletion(4, false);
+      this.updateCompletion(5, false);
     }
   }
 

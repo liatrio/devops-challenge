@@ -27,10 +27,6 @@ const instructionText = [
 ];
 
 class Instructions extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   getActiveIndex() {
     return this.props.activeStep.indexOf(true);
   }

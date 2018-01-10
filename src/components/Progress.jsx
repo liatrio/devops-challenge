@@ -11,15 +11,12 @@ const stepTitles = [
 ];
 
 class Progress extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   renderSteps() {
     let steps = [];
     stepTitles.forEach((t, i) => {
       steps.push(
         <Step
+          key={ t }
           active={ this.props.activeStep[i] }
           completed={ this.props.completedStep[i] }
         >
