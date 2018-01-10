@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import 'semantic-ui-css/semantic.min.css';
 import { Container, Grid } from 'semantic-ui-react';
 import MainMenu from './components/MainMenu';
+import Progress from './components/Progress';
 import Footer from './components/Footer';
 import './App.css';
 
@@ -24,8 +25,8 @@ class App extends Component {
         <Container style={{ marginTop: '7em' }}>
           <Grid>
             <Grid.Row>
-              Hello
-            </Grid.Row>
+              <Progress/>
+            </Grid.Row> 
             <Grid.Row>
               <Footer/>
             </Grid.Row>
