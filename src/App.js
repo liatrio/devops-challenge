@@ -15,6 +15,8 @@ class App extends Component {
     }
     this.state = {
       user: localUser || '',
+      gitHubActive: true,
+      gitHubCompleted: false
     };
   }
 
@@ -25,7 +27,10 @@ class App extends Component {
         <Container style={{ marginTop: '7em' }}>
           <Grid>
             <Grid.Row>
-              <Progress/>
+              <Progress
+                gitHubActive={this.state.gitHubActive}
+                gitHubCompleted={this.state.gitHubCompleted}
+              />
             </Grid.Row> 
             <Grid.Row>
               <Footer/>

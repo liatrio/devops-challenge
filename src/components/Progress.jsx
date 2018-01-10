@@ -9,12 +9,15 @@ class Progress extends Component {
   render() {
     return ( <Container>
       <Step.Group ordered stackable='tablet' vertical size='mini'>
-        <Step completed>
+        <Step
+          active={this.props.gitHubActive}
+          completed={this.props.gitHubCompleted}
+        >
           <Step.Content>
             <Step.Title>GitHub Account</Step.Title>
           </Step.Content>
         </Step>
-        <Step active>
+        <Step>
           <Step.Content>
             <Step.Title>Fork Sock-shop</Step.Title>
           </Step.Content>
