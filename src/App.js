@@ -24,11 +24,22 @@ class App extends Component {
     this.updateActive = this.updateActive.bind(this);
     this.hasForked = this.hasForked.bind(this);
     this.hasAddedTravis = this.hasAddedTravis.bind(this);
+    this.hasEnabledTravis = this.hasEnabledTravis.bind(this);
     setInterval(this.updateProgress, 5000);
   }
 
-  // Travis CI org
-  // repo/shanemacbride%2Fmicroservices-demo/builds?limit=5
+  hasEnabledTravis(u) {
+    const url =
+      'https://api.travis-ci.org/repo/' + u +
+      '%2Fmicroservices-demo/builds?limit=5';
+    fetch(url, { headers: { 'Travis-API-Version': '3' } })
+      .then(function(a) {
+        return a.json();
+      })
+      .then(function(b) {
+        console.log(b);
+      });
+  }
 
   hasAddedTravis(u) {
     const url =
@@ -88,6 +99,7 @@ class App extends Component {
               .then(function(addedTravis) {
                 if (addedTravis === true) {
                   that.updateCompletion(2, true);
+                  that.hasEnabledTravis(that.state.user);
                   that.updateActive(that.state.completed.indexOf(false));
                 } else {
                   that.updateCompletion(2, false);
