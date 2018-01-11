@@ -27,6 +27,9 @@ class App extends Component {
     setInterval(this.updateProgress, 5000);
   }
 
+  // Travis CI org
+  // repo/shanemacbride%2Fmicroservices-demo/builds?limit=5
+
   hasAddedTravis(u) {
     const url =
       'https://api.github.com/repos/'+u+'/microservices-demo/contents/'
