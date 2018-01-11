@@ -9,15 +9,16 @@ const instructionText = [
     Fork <a target="_blank" rel="noopener noreferrer" href="https://github.com/liatrio/microservices-demo#fork-destination-box">liatrio/microservices-demo</a> on GitHub.
   </p>,
   <p>
-    Enable Travis CI
+    Add this travis yml file
+  </p>,
+  <p>
+    Enable travis ci on travis ci.org
   </p>,
   <p>
     Fix the build error (rename the file correctly..)
   </p>,
   <p>
     Register for relevant play-with-docker account
-  </p>,
-  <p>
     Run Sock-shop on play-with-docker:
     <br />
 		$ git clone https://github.com/your_github_username/microservices-demo <br />

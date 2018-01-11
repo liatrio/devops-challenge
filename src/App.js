@@ -23,7 +23,25 @@ class App extends Component {
     this.updateCompletion = this.updateCompletion.bind(this);
     this.updateActive = this.updateActive.bind(this);
     this.hasForked = this.hasForked.bind(this);
+    this.hasAddedTravis = this.hasAddedTravis.bind(this);
     setInterval(this.updateProgress, 5000);
+  }
+
+  hasAddedTravis(u) {
+    const url =
+      'https://api.github.com/repos/'+u+'/microservices-demo/contents/'
+    return fetch(url)
+      .then(function(a) {
+        return a.json();
+      })
+      .then(function(b) {
+        for (var key in b) {
+          if (b[key].name === '.travis.yml') {
+            return true;
+          }
+        }
+        return false;
+      });
   }
 
   hasForked(u) {
@@ -35,13 +53,10 @@ class App extends Component {
       })
       .then(function(b) {
         for (var key in b) {
-          console.log(b[key].owner.login);
           if (b[key].owner.login === u) {
-            console.log('returning true');
             return true;
           }
         }
-        console.log('returning false');
         return false;
       });
   }
@@ -61,22 +76,32 @@ class App extends Component {
   updateProgress() {
     if (this.state.user !== '') {
       this.updateCompletion(0, true);
-      //this.hasForked(this.state.user);
       var that = this;
       this.hasForked(this.state.user)
         .then(function(forked) {
           if (forked === true) {
             that.updateCompletion(1, true);
+            that.hasAddedTravis(that.state.user)
+              .then(function(addedTravis) {
+                if (addedTravis === true) {
+                  that.updateCompletion(2, true);
+                  that.updateActive(that.state.completed.indexOf(false));
+                } else {
+                  that.updateCompletion(2, false);
+                  that.updateCompletion(3, false);
+                  that.updateCompletion(4, false);
+                  that.updateCompletion(5, false);
+                  that.updateActive(that.state.completed.indexOf(false));
+                }
+              });
           } else {
             that.updateCompletion(1, false);
             that.updateCompletion(2, false);
             that.updateCompletion(3, false);
             that.updateCompletion(4, false);
             that.updateCompletion(5, false);
+            that.updateActive(that.state.completed.indexOf(false));
           }
-        })
-        .then(function() {
-          that.updateActive(that.state.completed.indexOf(false));
         });
     } else {
       this.updateCompletion(0, false);
