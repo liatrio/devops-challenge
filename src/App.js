@@ -25,7 +25,11 @@ class App extends Component {
     this.hasForked = this.hasForked.bind(this);
     this.hasAddedTravis = this.hasAddedTravis.bind(this);
     this.hasEnabledTravis = this.hasEnabledTravis.bind(this);
-    setInterval(this.updateProgress, 5000);
+    //setInterval(this.updateProgress, 5000);
+    // todo: add refresh button "Check Progress" that calls updateProgress
+    // also set the interval of updateProgress to 5 minutes
+    // add forward and backward buttons that iterate the active
+    // step
   }
 
   hasEnabledTravis(u) {
