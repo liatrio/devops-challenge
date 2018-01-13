@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import 'semantic-ui-css/semantic.min.css';
-import { Container, Grid } from 'semantic-ui-react';
+import { Container, Grid, Button } from 'semantic-ui-react';
 import MainMenu from './components/MainMenu';
 import Progress from './components/Progress';
 import Instructions from './components/Instructions';
@@ -25,11 +25,27 @@ class App extends Component {
     this.hasForked = this.hasForked.bind(this);
     this.hasAddedTravis = this.hasAddedTravis.bind(this);
     this.hasEnabledTravis = this.hasEnabledTravis.bind(this);
-    //setInterval(this.updateProgress, 5000);
-    // todo: add refresh button "Check Progress" that calls updateProgress
-    // also set the interval of updateProgress to 5 minutes
-    // add forward and backward buttons that iterate the active
-    // step
+    this.nextStep = this.nextStep.bind(this);
+    this.prevStep = this.prevStep.bind(this);
+
+    // call updateProgress on page reload
+    // add button at the bottom of each instruction "Validate Completion"
+    // this button calls updateProgress , not sure on the name^
+    // add somewhere that states the current username being tracked
+  }
+
+  prevStep() {
+    const currentStep = this.state.active.indexOf(true);
+    let newActive = [ false, false, false, false, false, false ];
+    newActive[currentStep - 1] = true;
+    this.setState({ active: newActive });
+  }
+
+  nextStep() {
+    const currentStep = this.state.active.indexOf(true);
+    let newActive = [ false, false, false, false, false, false ];
+    newActive[currentStep + 1] = true;
+    this.setState({ active: newActive });
   }
 
   hasEnabledTravis(u) {
@@ -145,6 +161,20 @@ class App extends Component {
                   activeStep={ this.state.active }
                   completedStep={ this.state.completed }
                 />
+                <Button.Group fluid>
+                  <Button compact
+                    icon='left arrow'
+                    onClick={ this.prevStep }
+                  />
+                  <Button compact
+                    icon='refresh'
+                    onClick={ this.updateProgress }
+                  />
+                  <Button compact
+                    icon='right arrow'
+                    onClick={ this.nextStep }
+                  />
+                </Button.Group>
               </Grid.Column>
               <Grid.Column width={11}>
                 <Instructions activeStep={ this.state.active } />

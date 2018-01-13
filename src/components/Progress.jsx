@@ -4,7 +4,7 @@ import { Step } from 'semantic-ui-react';
 const stepTitles = [
   'GitHub Account',
   'Fork Sock-shop',
-  'Add Travis CI Configuration',
+  'Add CI Config.',
   'Enable Travis CI',
   'Correct Build Error',
   'Run Sock-shop'
@@ -31,7 +31,7 @@ class Progress extends Component {
 
   render() {
     return (
-      <Step.Group ordered stackable='tablet' vertical size='mini'>
+      <Step.Group ordered fluid vertical size='mini'>
       { this.renderSteps() }
       </Step.Group>
     );
