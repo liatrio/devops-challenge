@@ -15,7 +15,7 @@ class App extends Component {
       localUser = JSON.parse(localStorage.getItem('USER'));
     }
     this.state = {
-      user: localUser || 'shanemacbride',
+      user: localUser || '',
       active: [ true, false, false, false, false, false ],
       completed: [ false, false, false, false, false, false ]
     };
@@ -27,6 +27,7 @@ class App extends Component {
     this.hasEnabledTravis = this.hasEnabledTravis.bind(this);
     this.nextStep = this.nextStep.bind(this);
     this.prevStep = this.prevStep.bind(this);
+    this.setRemainingToFalse = this.setRemainingToFalse.bind(this);
 
     // call updateProgress on page reload
     // add button at the bottom of each instruction "Validate Completion"
@@ -36,16 +37,20 @@ class App extends Component {
 
   prevStep() {
     const currentStep = this.state.active.indexOf(true);
-    let newActive = [ false, false, false, false, false, false ];
-    newActive[currentStep - 1] = true;
-    this.setState({ active: newActive });
+    if (currentStep > 0) {
+      let newActive = [ false, false, false, false, false, false ];
+      newActive[currentStep - 1] = true;
+      this.setState({ active: newActive });
+    }
   }
 
   nextStep() {
     const currentStep = this.state.active.indexOf(true);
-    let newActive = [ false, false, false, false, false, false ];
-    newActive[currentStep + 1] = true;
-    this.setState({ active: newActive });
+    if (currentStep < 5) { // length of active
+      let newActive = [ false, false, false, false, false, false ];
+      newActive[currentStep + 1] = true;
+      this.setState({ active: newActive });
+    }
   }
 
   hasEnabledTravis(u) {
@@ -107,6 +112,13 @@ class App extends Component {
     this.setState({ active: newActive });
   }
 
+  setRemainingToFalse(start) {
+    for (var i = start; i < this.state.completed.length; i++) {
+      console.log("Setting "+i+" to false!");
+      this.updateCompletion(i, false);
+    }
+  }
+
   updateProgress() {
     if (this.state.user !== '') {
       this.updateCompletion(0, true);
@@ -122,29 +134,17 @@ class App extends Component {
                   that.hasEnabledTravis(that.state.user);
                   that.updateActive(that.state.completed.indexOf(false));
                 } else {
-                  that.updateCompletion(2, false);
-                  that.updateCompletion(3, false);
-                  that.updateCompletion(4, false);
-                  that.updateCompletion(5, false);
+                  that.setRemainingToFalse(2);
                   that.updateActive(that.state.completed.indexOf(false));
                 }
               });
           } else {
-            that.updateCompletion(1, false);
-            that.updateCompletion(2, false);
-            that.updateCompletion(3, false);
-            that.updateCompletion(4, false);
-            that.updateCompletion(5, false);
+            that.setRemainingToFalse(1);
             that.updateActive(that.state.completed.indexOf(false));
           }
         });
     } else {
-      this.updateCompletion(0, false);
-      this.updateCompletion(1, false);
-      this.updateCompletion(2, false);
-      this.updateCompletion(3, false);
-      this.updateCompletion(4, false);
-      this.updateCompletion(5, false);
+      this.setRemainingToFalse(0);
       this.updateActive(this.state.completed.indexOf(false));
     }
   }
@@ -152,7 +152,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <MainMenu />
+        <MainMenu user={ this.state.user }/>
         <Container style={{ marginTop: '7em' }}>
           <Grid>
             <Grid.Row>

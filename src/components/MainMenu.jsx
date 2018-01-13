@@ -1,6 +1,6 @@
 import React, { Component } from 'react';    
 import logo from '../logo.png';    
-import { Menu, Container, Image, Dropdown } from 'semantic-ui-react';    
+import { Menu, Icon, Container, Image, Dropdown } from 'semantic-ui-react';
     
 class MainMenu extends Component {    
   render() {    
@@ -57,7 +57,18 @@ class MainMenu extends Component {
                 How to Edit a File in a Repository on GitHub
               </Dropdown.Item>    
             </Dropdown.Menu>    
-          </Dropdown>    
+          </Dropdown>
+          { this.props.user ?
+            <Menu.Item    
+              header    
+              as='a'
+              target="_blank"
+              rel="noopener noreferrer"
+              href={ 'https://github.com/' + this.props.user }
+            >
+              <Icon name='github' />
+              {this.props.user}
+            </Menu.Item> : null }
         </Container>    
       </Menu>    
     );    
