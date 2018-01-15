@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import 'semantic-ui-css/semantic.min.css';
-import { Container, Grid, Button } from 'semantic-ui-react';
+import { Container, Grid } from 'semantic-ui-react';
 import MainMenu from './components/MainMenu';
 import Progress from './components/Progress';
+import Buttons from './components/Buttons';
 import Instructions from './components/Instructions';
 import Footer from './components/Footer';
 import './App.css';
@@ -15,7 +16,7 @@ class App extends Component {
       localUser = JSON.parse(localStorage.getItem('USER'));
     }
     this.state = {
-      user: localUser || '',
+      user: localUser || 'shanemacbride',
       active: [ true, false, false, false, false, false ],
       completed: [ false, false, false, false, false, false ]
     };
@@ -114,7 +115,6 @@ class App extends Component {
 
   setRemainingToFalse(start) {
     for (var i = start; i < this.state.completed.length; i++) {
-      console.log("Setting "+i+" to false!");
       this.updateCompletion(i, false);
     }
   }
@@ -161,20 +161,11 @@ class App extends Component {
                   activeStep={ this.state.active }
                   completedStep={ this.state.completed }
                 />
-                <Button.Group fluid>
-                  <Button compact
-                    icon='left arrow'
-                    onClick={ this.prevStep }
-                  />
-                  <Button compact
-                    icon='refresh'
-                    onClick={ this.updateProgress }
-                  />
-                  <Button compact
-                    icon='right arrow'
-                    onClick={ this.nextStep }
-                  />
-                </Button.Group>
+                <Buttons
+                  prevS={ this.prevStep }
+                  nextS={ this.nextStep }
+                  updateP={ this.updateProgress }
+                />
               </Grid.Column>
               <Grid.Column width={11}>
                 <Instructions activeStep={ this.state.active } />
