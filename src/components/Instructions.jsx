@@ -20,13 +20,11 @@ const instructionText = [
   </div>,
   <div>
     Add the following Travis CI configuration as a new file called <code>.travis.yml</code> to your fork.
-    <br />
-    <br />
-    <code>
-      some travis ci config
-    </code>
-    <br />
-    <br />
+    <Segment color='green'>
+      <code>
+        some travis ci config
+      </code>
+    </Segment>
     Click the button below when done.
     <br />
     <br />
@@ -44,14 +42,14 @@ const instructionText = [
   </div>,
   <div>
     Register for relevant play-with-docker account
-    Run Sock-shop on play-with-docker:
-
+    Run Sock-shop on play-with-docker.
     <Segment color='green'>
-    <code>
-		$ git clone https://github.com/YOUR_USERNAME/microservices-demo <br />
-		$ cd microservices-demo/deploy/docker-compose<br />
-		$ docker-compose up
-    </code></Segment>
+      <code>
+		  $ git clone https://github.com/YOUR_USERNAME/microservices-demo <br />
+		  $ cd microservices-demo/deploy/docker-compose<br />
+		  $ docker-compose up
+      </code>
+    </Segment>
   </div>
 ];
 
