@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { Segment, Form } from 'semantic-ui-react';
+import { Segment, Form, Button } from 'semantic-ui-react';
 
 const instructionText = [
   <p>
     Create a <a target="_blank" rel="noopener noreferrer" href="https://github.com/join">GitHub</a> account if you don't already have one. Enter your username in the field below to start tracking your progress. 
   </p>,
   <p>
-    Fork <a target="_blank" rel="noopener noreferrer" href="https://github.com/liatrio/microservices-demo#fork-destination-box">liatrio/microservices-demo</a> on GitHub.
+    Fork <a target="_blank" rel="noopener noreferrer" href="https://github.com/liatrio/microservices-demo#fork-destination-box">liatrio/microservices-demo</a> on GitHub. Click the button below when done.
   </p>,
   <p>
     Add this travis yml file
@@ -39,6 +39,7 @@ class Instructions extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.checkUsername = this.checkUsername.bind(this);
+    this.renderUpdater = this.renderUpdater.bind(this);
   }
 
   componentWillUpdate(nextProps, nextState) {
@@ -100,6 +101,19 @@ class Instructions extends Component {
       </Form>
     );
   }
+
+  renderUpdater() {
+    return (
+      <Button
+        onClick={ this.props.updateP }
+        basic
+        color='green'
+      >
+        Complete!
+      </Button>
+    );
+  }
+
   getActiveIndex() {
     return this.props.activeStep.indexOf(true);
   }
@@ -111,7 +125,11 @@ class Instructions extends Component {
         { this.getActiveIndex() === 0 ?
           this.renderForm() : null }
         { this.state.notUser && (this.getActiveIndex() === 0) ?
-          <p><br/>Please input a valid username.</p> : null }
+          <Segment color='red'>
+            Please input a valid username.
+          </Segment> : null }
+        { this.getActiveIndex() !== 0 ?
+          this.renderUpdater() : null }
       </Segment>
     );
   }
