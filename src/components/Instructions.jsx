@@ -2,29 +2,57 @@ import React, { Component } from 'react';
 import { Segment, Form, Button } from 'semantic-ui-react';
 
 const instructionText = [
-  <p>
-    Create a <a target="_blank" rel="noopener noreferrer" href="https://github.com/join">GitHub</a> account if you don't already have one. Enter your username in the field below to start tracking your progress. 
-  </p>,
-  <p>
-    Fork <a target="_blank" rel="noopener noreferrer" href="https://github.com/liatrio/microservices-demo#fork-destination-box">liatrio/microservices-demo</a> on GitHub. Click the button below when done.
-  </p>,
-  <p>
-    Add this travis yml file
-  </p>,
-  <p>
-    Enable travis ci on travis ci.org
-  </p>,
-  <p>
+  <div>
+    Create a <a target="_blank" rel="noopener noreferrer" href="https://github.com/join">GitHub</a> account if you don't already have one.
+    <br />
+    <br />
+    Enter your username in the field below to start tracking your progress.
+    <br />
+    <br />
+  </div>,
+  <div>
+    Fork <a target="_blank" rel="noopener noreferrer" href="https://github.com/liatrio/microservices-demo#fork-destination-box">liatrio/microservices-demo</a> on GitHub.
+    <br />
+    <br />
+    Click the button below when done.
+    <br />
+    <br />
+  </div>,
+  <div>
+    Add the following Travis CI configuration as a new file called <code>.travis.yml</code> to your fork.
+    <br />
+    <br />
+    <code>
+      some travis ci config
+    </code>
+    <br />
+    <br />
+    Click the button below when done.
+    <br />
+    <br />
+  </div>,
+  <div>
+    On <a target="_blank" rel="noopener noreferrer" href="https://travis-ci.org/">travis-ci.org</a>, enable your fork of microservices-demo so that it will build.
+    <br />
+    <br />
+    Click the button below when done.
+    <br />
+    <br />
+  </div>,
+  <div>
     Fix the build error (rename the file correctly..)
-  </p>,
-  <p>
+  </div>,
+  <div>
     Register for relevant play-with-docker account
     Run Sock-shop on play-with-docker:
-    <br />
-		$ git clone https://github.com/your_github_username/microservices-demo <br />
+
+    <Segment color='green'>
+    <code>
+		$ git clone https://github.com/YOUR_USERNAME/microservices-demo <br />
 		$ cd microservices-demo/deploy/docker-compose<br />
 		$ docker-compose up
-  </p>
+    </code></Segment>
+  </div>
 ];
 
 class Instructions extends Component {
