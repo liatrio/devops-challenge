@@ -56,6 +56,12 @@ class MainMenu extends Component {
                 href="https://help.github.com/articles/editing-files-in-your-repository/">
                 How to Edit a File in a Repository on GitHub
               </Dropdown.Item>    
+              <Dropdown.Item
+                as='a'
+                onClick={ this.props.clear }
+              >
+                Reset Progress Tracking
+              </Dropdown.Item>
             </Dropdown.Menu>    
           </Dropdown>
           { this.props.user ?

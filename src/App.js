@@ -39,7 +39,6 @@ class App extends Component {
   }
 
   setUser(u) {
-    console.log('setting ('+u+')');
     this.setState({ user: u });
     this.save(u);
   }
@@ -47,6 +46,8 @@ class App extends Component {
   clearUser() {
     this.setState({ user: '' });
     localStorage.removeItem('USER');
+    this.setRemainingToFalse(0);
+    this.updateActive(this.state.completed.indexOf(false));
   }
 
   save(u) {
@@ -174,7 +175,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <MainMenu user={ this.state.user }/>
+        <MainMenu clear={ this.clearUser } user={ this.state.user }/>
         <Container style={{ marginTop: '7em' }}>
           <Grid>
             <Grid.Row>
@@ -193,7 +194,6 @@ class App extends Component {
                 <Instructions
                   activeStep={ this.state.active }
                   set={ this.setUser }
-                  clear={ this.clearUser }
                   updateP={ this.updateProgress } 
                 />
               </Grid.Column>
