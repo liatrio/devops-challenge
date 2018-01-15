@@ -16,7 +16,7 @@ class App extends Component {
       localUser = JSON.parse(localStorage.getItem('USER'));
     }
     this.state = {
-      user: localUser || 'shanemacbride',
+      user: localUser || '',
       active: [ true, false, false, false, false, false ],
       completed: [ false, false, false, false, false, false ]
     };
@@ -29,11 +29,29 @@ class App extends Component {
     this.nextStep = this.nextStep.bind(this);
     this.prevStep = this.prevStep.bind(this);
     this.setRemainingToFalse = this.setRemainingToFalse.bind(this);
+    this.setUser = this.setUser.bind(this);
+    this.clearUser = this.clearUser.bind(this);
 
     // call updateProgress on page reload
     // add button at the bottom of each instruction "Validate Completion"
     // this button calls updateProgress , not sure on the name^
     // add somewhere that states the current username being tracked
+  }
+
+  setUser(u) {
+    console.log('setting ('+u+')');
+    this.setState({ user: u });
+    this.save(u);
+  }
+
+  clearUser() {
+    this.setState({ user: '' });
+    localStorage.removeItem('USER');
+  }
+
+  save(u) {
+    if (!u) return;
+    localStorage.setItem('USER', JSON.stringify(u));
   }
 
   prevStep() {
@@ -43,6 +61,10 @@ class App extends Component {
       newActive[currentStep - 1] = true;
       this.setState({ active: newActive });
     }
+  }
+
+  componentDidMount() {
+    this.updateProgress();
   }
 
   nextStep() {
@@ -168,7 +190,12 @@ class App extends Component {
                 />
               </Grid.Column>
               <Grid.Column width={11}>
-                <Instructions activeStep={ this.state.active } />
+                <Instructions
+                  activeStep={ this.state.active }
+                  set={ this.setUser }
+                  clear={ this.clearUser }
+                  updateP={ this.updateProgress } 
+                />
               </Grid.Column>
             </Grid.Row> 
             <Grid.Row centered>
