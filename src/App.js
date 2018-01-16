@@ -86,6 +86,8 @@ class App extends Component {
         return a.json();
       })
       .then(function(b) {
+        // Latest build status:
+        //console.log(b.builds[b.builds.length-1].state);
         if (b.builds.length > 0) {
           return true;
         }
