@@ -33,6 +33,9 @@ const instructionText = [
     On <a target="_blank" rel="noopener noreferrer" href="https://travis-ci.org/">travis-ci.org</a>, enable your fork of microservices-demo so that it will build.
     <br />
     <br />
+    Trigger a build using the Travis CI web console.
+    <br />
+    <br />
     Click the button below when done.
     <br />
     <br />

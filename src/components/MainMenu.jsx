@@ -46,6 +46,13 @@ class MainMenu extends Component {
                 as='a'
                 target="_blank"
                 rel="noopener noreferrer"
+                href="https://blog.travis-ci.com/2017-08-24-trigger-custom-build">
+                How to Trigger a Build using the Travis CI Web Console
+              </Dropdown.Item>
+              <Dropdown.Item
+                as='a'
+                target="_blank"
+                rel="noopener noreferrer"
                 href="https://docs.travis-ci.com/user/getting-started/">
                 Getting Started with Travis CI
               </Dropdown.Item>    

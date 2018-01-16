@@ -81,12 +81,17 @@ class App extends Component {
     const url =
       'https://api.travis-ci.org/repo/' + u +
       '%2Fmicroservices-demo/builds?limit=5';
-    fetch(url, { headers: { 'Travis-API-Version': '3' } })
+    return fetch(url, { headers: { 'Travis-API-Version': '3' } })
       .then(function(a) {
         return a.json();
       })
       .then(function(b) {
-        console.log(b);
+        if (b.builds.length > 0) {
+          return true;
+        }
+        else {
+          return false;
+        }
       });
   }
 
@@ -154,8 +159,17 @@ class App extends Component {
               .then(function(addedTravis) {
                 if (addedTravis === true) {
                   that.updateCompletion(2, true);
-                  that.hasEnabledTravis(that.state.user);
-                  that.updateActive(that.state.completed.indexOf(false));
+                  that.hasEnabledTravis(that.state.user)
+                    .then(function(enabledTravis) {
+                      if (enabledTravis === true) {
+                        that.updateCompletion(3, true);
+                        that.updateActive(that.state.completed.indexOf(false));
+                      }
+                      else {
+                        that.setRemainingToFalse(3);
+                        that.updateActive(that.state.completed.indexOf(false));
+                      }
+                    });
                 } else {
                   that.setRemainingToFalse(2);
                   that.updateActive(that.state.completed.indexOf(false));
