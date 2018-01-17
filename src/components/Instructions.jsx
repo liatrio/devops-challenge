@@ -53,8 +53,16 @@ const instructionText = [
     <br />
   </div>,
   <div>
-    Register for relevant play-with-docker account
-    Run Sock-shop on play-with-docker.
+    Log in to <a target="_blank" rel="noopener noreferrer" href="https://labs.play-with-docker.com/">Play with Docker</a>.
+    <br />
+    <br />
+    You will need a Docker Hub account to use Play with Docker. You can create an account at <a target="_blank" rel="noopener noreferrer" href="https://hub.docker.com/">hub.docker.com</a>.
+    <br />
+    <br />
+    Once you are logged in on Play with Docker, hit the start button. On the left, select Add New Instance. This will create a Docker playground for you to run commands in.
+    <br />
+    <br />
+    Run Sock-shop!
     <br />
     <Segment color='green'>
       <code>
@@ -63,6 +71,8 @@ const instructionText = [
 		  $ docker-compose up
       </code>
     </Segment>
+    After Sock-shop has finishing deploying, you should be able to click a blue port 80 link. Congratulations! You have configured Travis CI for a microservices application and deployed it using Docker Compose. Enter the URL of your deployment below to complete the DevOps Challenge.
+    <br />
     <br />
   </div>
 ];
@@ -72,13 +82,17 @@ class Instructions extends Component {
     super(props);
     this.state = {
       username: '',
+      url: '',
       invalid: true,
       notUser: false
     }
     this.renderForm = this.renderForm.bind(this);
+    this.renderUrlForm = this.renderUrlForm.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleUrlSubmit = this.handleUrlSubmit.bind(this);
     this.checkUsername = this.checkUsername.bind(this);
+    this.checkUrl = this.checkUrl.bind(this);
     this.renderUpdater = this.renderUpdater.bind(this);
   }
 
@@ -120,6 +134,32 @@ class Instructions extends Component {
     event.preventDefault();
   }
 
+  checkUrl(u) {
+    return fetch(u)
+      .then(function(a) {
+        return true;/*
+        return a.json();
+      })
+      .then(function(b) {
+        return true;*/
+      });
+  }
+
+  handleUrlSubmit(event) {
+    var that = this;
+    that.checkUrl(that.state.url).then(function(valid) {
+      if (valid !== false) {
+        that.props.done();
+        that.setState({ url: '' });
+        that.props.updateP();
+      }
+      else {
+        that.setState({ url: '' });
+      }
+    });
+    event.preventDefault();
+  }
+
   renderForm() {
     return (
       <Form onSubmit={ this.handleSubmit }>
@@ -137,6 +177,28 @@ class Instructions extends Component {
           value='Set GitHub Username'
         >
           Set Username
+        </Form.Button>
+      </Form>
+    );
+  }
+
+  renderUrlForm() {
+    return (
+      <Form onSubmit={ this.handleUrlSubmit }>
+        <Form.Group widths='equal'>
+          <Form.Input
+            label='Sock-shop URL'
+            name='url'
+            value={ this.state.url }
+            onChange={ this.handleChange } 
+            placeholder='http://ip123-45-6-78-abcdefghijklmno-80.direct.labs.play-with-docker.com/'
+          />
+        </Form.Group>
+        <Form.Button
+          type='submit'
+          value='Set Sock-shop URL'
+        >
+          Set Sock-shop URL
         </Form.Button>
       </Form>
     );
@@ -162,13 +224,15 @@ class Instructions extends Component {
     return (
       <Segment>
         { instructionText[ this.getActiveIndex() ] }
+        { this.getActiveIndex() === 5 ?
+          this.renderUrlForm() : null }
         { this.getActiveIndex() === 0 ?
           this.renderForm() : null }
         { this.state.notUser && (this.getActiveIndex() === 0) ?
           <Segment color='red'>
             Please input a valid username.
           </Segment> : null }
-        { this.getActiveIndex() !== 0 ?
+        { this.getActiveIndex() !== (0 || 5) ?
           this.renderUpdater() : null }
       </Segment>
     );

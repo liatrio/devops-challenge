@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import 'semantic-ui-css/semantic.min.css';
 import ConfettiCanvas from 'react-confetti-canvas';
-import { Container, Grid } from 'semantic-ui-react';
+import { Container, Grid, Segment } from 'semantic-ui-react';
 import MainMenu from './components/MainMenu';
 import Progress from './components/Progress';
 import Buttons from './components/Buttons';
@@ -13,11 +13,14 @@ class App extends Component {
   constructor() {
     super();
     let localUser;
+    let localDone;
     if (window.localStorage) {
       localUser = JSON.parse(localStorage.getItem('USER'));
+      localDone = JSON.parse(localStorage.getItem('DONE'));
     }
     this.state = {
       user: localUser || '',
+      done: localDone || '',
       active: [ true, false, false, false, false, false ],
       completed: [ false, false, false, false, false, false ]
     };
@@ -34,11 +37,12 @@ class App extends Component {
     this.setUser = this.setUser.bind(this);
     this.clearUser = this.clearUser.bind(this);
     this.completedAll = this.completedAll.bind(this);
+    this.completeAll = this.completeAll.bind(this);
+  }
 
-    // call updateProgress on page reload
-    // add button at the bottom of each instruction "Validate Completion"
-    // this button calls updateProgress , not sure on the name^
-    // add somewhere that states the current username being tracked
+  completeAll() {
+    this.setState({ done: 'yes' });
+    localStorage.setItem('DONE', JSON.stringify('yes'));
   }
 
   setUser(u) {
@@ -47,8 +51,9 @@ class App extends Component {
   }
 
   clearUser() {
-    this.setState({ user: '' });
+    this.setState({ user: '', done: '' });
     localStorage.removeItem('USER');
+    localStorage.removeItem('DONE');
     this.setRemainingToFalse(0);
     this.updateActive(this.state.completed.indexOf(false));
   }
@@ -198,7 +203,14 @@ class App extends Component {
                           .then(function(fixedBuild) {
                             if (fixedBuild === true) {
                               that.updateCompletion(4, true);
-                              that.updateActive(that.state.completed.indexOf(false));
+                              if (that.state.done === 'yes') {
+                                that.updateCompletion(5, true);
+                                that.updateActive(that.state.completed.indexOf(false));
+                              }
+                              else {
+                                that.setRemainingToFalse(5);
+                                that.updateActive(that.state.completed.indexOf(false));
+                              }
                             }
                             else {
                               that.setRemainingToFalse(4);
@@ -250,11 +262,16 @@ class App extends Component {
                 />
               </Grid.Column>
               <Grid.Column width={11}>
-                <Instructions
-                  activeStep={ this.state.active }
-                  set={ this.setUser }
-                  updateP={ this.updateProgress } 
-                />
+                { this.completedAll() ?
+                  <Segment color='green'>
+                    You have completed the DevOps Challenge! 
+                  </Segment> :
+                  <Instructions
+                    activeStep={ this.state.active }
+                    set={ this.setUser }
+                    updateP={ this.updateProgress } 
+                    done={ this.completeAll }
+                  /> }
               </Grid.Column>
             </Grid.Row> 
             <Grid.Row centered>
