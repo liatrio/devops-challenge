@@ -71,7 +71,10 @@ const instructionText = [
 		  $ docker-compose up
       </code>
     </Segment>
-    After Sock-shop has finishing deploying, you should be able to click a blue port 80 link. Congratulations! You have configured Travis CI for a microservices application and deployed it using Docker Compose. Enter the URL of your deployment below to complete the DevOps Challenge.
+    After Sock-shop has finishing deploying, you should be able to click a blue port 80 link to see it running.
+    <br />
+    <br />
+    Scroll down to "Hot This Week" on Sock-shop's homepage and enter the name of the socks that cost $99.99 to complete the DevOps Challenge.
     <br />
     <br />
   </div>
@@ -135,28 +138,23 @@ class Instructions extends Component {
   }
 
   checkUrl(u) {
-    return fetch(u)
-      .then(function(a) {
-        return true;/*
-        return a.json();
-      })
-      .then(function(b) {
-        return true;*/
-      });
+    if ((u === 'holy') || (u === 'Holy')) {
+      return true;
+    }
+    else {
+      return false;
+    }
   }
 
   handleUrlSubmit(event) {
-    var that = this;
-    that.checkUrl(that.state.url).then(function(valid) {
-      if (valid !== false) {
-        that.props.done();
-        that.setState({ url: '' });
-        that.props.updateP();
-      }
-      else {
-        that.setState({ url: '' });
-      }
-    });
+    if (this.checkUrl(this.state.url)) {
+      this.props.done();
+      this.setState({ url: '' });
+      this.props.updateP();
+    }
+    else {
+      this.setState({ url: '' });
+    }
     event.preventDefault();
   }
 
@@ -187,18 +185,17 @@ class Instructions extends Component {
       <Form onSubmit={ this.handleUrlSubmit }>
         <Form.Group widths='equal'>
           <Form.Input
-            label='Sock-shop URL'
+            label='Secret Word'
             name='url'
             value={ this.state.url }
             onChange={ this.handleChange } 
-            placeholder='http://ip123-45-6-78-abcdefghijklmno-80.direct.labs.play-with-docker.com/'
           />
         </Form.Group>
         <Form.Button
           type='submit'
-          value='Set Sock-shop URL'
+          value='Secret Word'
         >
-          Set Sock-shop URL
+          Submit
         </Form.Button>
       </Form>
     );
@@ -232,7 +229,8 @@ class Instructions extends Component {
           <Segment color='red'>
             Please input a valid username.
           </Segment> : null }
-        { this.getActiveIndex() !== (0 || 5) ?
+        { ((this.getActiveIndex() !== 0) &&
+           (this.getActiveIndex() !== 5)) ?
           this.renderUpdater() : null }
       </Segment>
     );

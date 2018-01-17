@@ -264,7 +264,7 @@ class App extends Component {
               <Grid.Column width={11}>
                 { this.completedAll() ?
                   <Segment color='green'>
-                    You have completed the DevOps Challenge! 
+                    Congratulations, you have completed the DevOps Challenge!
                   </Segment> :
                   <Instructions
                     activeStep={ this.state.active }
