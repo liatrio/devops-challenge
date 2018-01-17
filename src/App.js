@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import 'semantic-ui-css/semantic.min.css';
+import ConfettiCanvas from 'react-confetti-canvas';
 import { Container, Grid } from 'semantic-ui-react';
 import MainMenu from './components/MainMenu';
 import Progress from './components/Progress';
@@ -219,10 +220,13 @@ class App extends Component {
   render() {
     return (
       <div>
+        <div className="confetti">
+          <ConfettiCanvas />
+        </div>
         <MainMenu clear={ this.clearUser } user={ this.state.user }/>
         <Container style={{ marginTop: '7em' }}>
           <Grid>
-            <Grid.Row>
+            <Grid.Row className='back'>
               <Grid.Column width={5}>
                 <Progress
                   activeStep={ this.state.active }
