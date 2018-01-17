@@ -1,3 +1,5 @@
-This is an application for leading a Tech Talk exercise. It is built using React. To run the site locally use `yarn install` and `yarn start`.
+This is an application built for a Chico State Tech Talk that is meant to give an introduction to some DevOps technologies.
+
+To run the site locally use `yarn install` and `yarn start`.
 
 ![Preview](img/devops-challenge.png)
