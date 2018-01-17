@@ -33,6 +33,7 @@ class App extends Component {
     this.setRemainingToFalse = this.setRemainingToFalse.bind(this);
     this.setUser = this.setUser.bind(this);
     this.clearUser = this.clearUser.bind(this);
+    this.completedAll = this.completedAll.bind(this);
 
     // call updateProgress on page reload
     // add button at the bottom of each instruction "Validate Completion"
@@ -168,6 +169,15 @@ class App extends Component {
     }
   }
 
+  completedAll() {
+    for (var i = 0; i < this.state.completed.length; i++) {
+      if ( this.state.completed[i] === false ) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   updateProgress() {
     if (this.state.user !== '') {
       this.updateCompletion(0, true);
@@ -220,9 +230,10 @@ class App extends Component {
   render() {
     return (
       <div>
-        <div className="confetti">
-          <ConfettiCanvas />
-        </div>
+        { this.completedAll() ?
+          <div className="confetti">
+            <ConfettiCanvas />
+          </div> : null }
         <MainMenu clear={ this.clearUser } user={ this.state.user }/>
         <Container style={{ marginTop: '7em' }}>
           <Grid>
