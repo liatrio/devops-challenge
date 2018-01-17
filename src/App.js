@@ -26,6 +26,7 @@ class App extends Component {
     this.hasForked = this.hasForked.bind(this);
     this.hasAddedTravis = this.hasAddedTravis.bind(this);
     this.hasEnabledTravis = this.hasEnabledTravis.bind(this);
+    this.hasFixedBuild = this.hasFixedBuild.bind(this);
     this.nextStep = this.nextStep.bind(this);
     this.prevStep = this.prevStep.bind(this);
     this.setRemainingToFalse = this.setRemainingToFalse.bind(this);
@@ -86,8 +87,6 @@ class App extends Component {
         return a.json();
       })
       .then(function(b) {
-        // Latest build status:
-        //console.log(b.builds[b.builds.length-1].state);
         if (b.builds.length > 0) {
           return true;
         }
@@ -95,6 +94,25 @@ class App extends Component {
           return false;
         }
       });
+  }
+
+  hasFixedBuild(u) {
+    const url =
+      'https://api.travis-ci.org/repo/' + u +
+      '%2Fmicroservices-demo/builds?limit=5';
+    return fetch(url, { headers: { 'Travis-API-Version': '3' } })
+      .then(function(a) {
+        return a.json();
+      })
+      .then(function(b) {
+        if(b.builds[0].state === 'passed') {
+          return true;
+        }
+        else {
+          return false;
+        }
+      });
+
   }
 
   hasAddedTravis(u) {
@@ -165,7 +183,17 @@ class App extends Component {
                     .then(function(enabledTravis) {
                       if (enabledTravis === true) {
                         that.updateCompletion(3, true);
-                        that.updateActive(that.state.completed.indexOf(false));
+                        that.hasFixedBuild(that.state.user)
+                          .then(function(fixedBuild) {
+                            if (fixedBuild === true) {
+                              that.updateCompletion(4, true);
+                              that.updateActive(that.state.completed.indexOf(false));
+                            }
+                            else {
+                              that.setRemainingToFalse(4);
+                              that.updateActive(that.state.completed.indexOf(false));
+                            }
+                          });
                       }
                       else {
                         that.setRemainingToFalse(3);

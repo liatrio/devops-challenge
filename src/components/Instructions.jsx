@@ -22,7 +22,11 @@ const instructionText = [
     Add the following Travis CI configuration as a new file called <code>.travis.yml</code> to your fork.
     <Segment color='green'>
       <code>
-        some travis ci config
+				sudo: required<br />
+				services:<br />
+				- docker<br />
+				script:<br />
+					- docker build -t chico .<br />
       </code>
     </Segment>
     Click the button below when done.
@@ -41,11 +45,17 @@ const instructionText = [
     <br />
   </div>,
   <div>
-    Fix the build error (rename the file correctly..)
+    The build failed! Fix the build by examining the cause of failure in the build logs on <a target="_blank" rel="noopener noreferrer" href="https://travis-ci.org/">travis-ci.org</a>.
+    <br />
+    <br />
+    Click the button below after the latest build has passed.
+    <br />
+    <br />
   </div>,
   <div>
     Register for relevant play-with-docker account
     Run Sock-shop on play-with-docker.
+    <br />
     <Segment color='green'>
       <code>
 		  $ git clone https://github.com/YOUR_USERNAME/microservices-demo <br />
@@ -53,6 +63,7 @@ const instructionText = [
 		  $ docker-compose up
       </code>
     </Segment>
+    <br />
   </div>
 ];
 
